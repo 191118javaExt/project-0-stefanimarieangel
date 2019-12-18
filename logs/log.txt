@@ -1,0 +1,113 @@
+2019-12-17 17:20:53 WARN  ConnectionUtil:21 - Unable to obtain connection to database
+java.sql.SQLException: No suitable driver found for jdbc:postgresql://localhost:5432/postgres
+	at java.sql.DriverManager.getConnection(Unknown Source)
+	at java.sql.DriverManager.getConnection(Unknown Source)
+	at com.revature.util.ConnectionUtil.getConnection(ConnectionUtil.java:19)
+	at com.revature.repositories.AccountDAOImpl.addAccount(AccountDAOImpl.java:80)
+	at com.revature.services.AccountServices.addAccount(AccountServices.java:24)
+	at com.revature.Driver.createUser(Driver.java:101)
+	at com.revature.Driver.start(Driver.java:47)
+	at com.revature.Driver.main(Driver.java:17)
+2019-12-17 17:48:55 WARN  UserDAOImpl:285 - No such user exists.
+org.postgresql.util.PSQLException: ERROR: relation "public.users" does not exist
+  Position: 15
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2497)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2233)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:310)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:446)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:370)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:149)
+	at org.postgresql.jdbc.PgPreparedStatement.executeQuery(PgPreparedStatement.java:108)
+	at com.revature.repositories.UserDAOImpl.getUserByFnameAndPassword(UserDAOImpl.java:267)
+	at com.revature.services.UserService.getUserByFnameAndPassword(UserService.java:47)
+	at com.revature.Driver.getUserFromDB(Driver.java:126)
+	at com.revature.Driver.start(Driver.java:52)
+	at com.revature.Driver.main(Driver.java:17)
+2019-12-17 19:27:28 WARN  UserDAOImpl:96 - Unable to add  account
+org.postgresql.util.PSQLException: ERROR: null value in column "user_id" violates not-null constraint
+  Detail: Failing row contains (1, null, 0, 0, 3456).
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2497)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2233)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:310)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:446)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:370)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:149)
+	at org.postgresql.jdbc.PgPreparedStatement.execute(PgPreparedStatement.java:138)
+	at com.revature.repositories.AccountDAOImpl.addAccount(AccountDAOImpl.java:92)
+	at com.revature.services.AccountServices.addAccount(AccountServices.java:24)
+	at com.revature.Driver.createUser(Driver.java:101)
+	at com.revature.Driver.start(Driver.java:47)
+	at com.revature.Driver.main(Driver.java:17)
+2019-12-17 19:47:03 WARN  UserDAOImpl:285 - No such user exists.
+org.postgresql.util.PSQLException: The column name accountId was not found in this ResultSet.
+	at org.postgresql.jdbc.PgResultSet.findColumn(PgResultSet.java:2587)
+	at org.postgresql.jdbc.PgResultSet.getInt(PgResultSet.java:2478)
+	at com.revature.repositories.UserDAOImpl.getUserByFnameAndPassword(UserDAOImpl.java:274)
+	at com.revature.services.UserService.getUserByFnameAndPassword(UserService.java:47)
+	at com.revature.Driver.getUserFromDB(Driver.java:126)
+	at com.revature.Driver.start(Driver.java:52)
+	at com.revature.Driver.main(Driver.java:17)
+2019-12-17 21:42:51 WARN  UserDAOImpl:284 - No such user exists.
+org.postgresql.util.PSQLException: The column name accountId was not found in this ResultSet.
+	at org.postgresql.jdbc.PgResultSet.findColumn(PgResultSet.java:2587)
+	at org.postgresql.jdbc.PgResultSet.getInt(PgResultSet.java:2478)
+	at com.revature.repositories.UserDAOImpl.getUserByUserIdAndPassword(UserDAOImpl.java:273)
+	at com.revature.Driver.logIn(Driver.java:149)
+	at com.revature.Driver.start(Driver.java:57)
+	at com.revature.Driver.main(Driver.java:19)
+2019-12-18 00:36:23 WARN  UserDAOImpl:273 - No such user exists.
+org.postgresql.util.PSQLException: The column name accountId was not found in this ResultSet.
+	at org.postgresql.jdbc.PgResultSet.findColumn(PgResultSet.java:2587)
+	at org.postgresql.jdbc.PgResultSet.getInt(PgResultSet.java:2478)
+	at com.revature.repositories.UserDAOImpl.getUserByUserIdAndPassword(UserDAOImpl.java:261)
+	at com.revature.Driver.logIn(Driver.java:149)
+	at com.revature.Driver.start(Driver.java:57)
+	at com.revature.Driver.main(Driver.java:19)
+2019-12-18 00:41:46 WARN  UserDAOImpl:273 - No such user exists.
+org.postgresql.util.PSQLException: The column name accountId was not found in this ResultSet.
+	at org.postgresql.jdbc.PgResultSet.findColumn(PgResultSet.java:2587)
+	at org.postgresql.jdbc.PgResultSet.getInt(PgResultSet.java:2478)
+	at com.revature.repositories.UserDAOImpl.getUserByUserIdAndPassword(UserDAOImpl.java:261)
+	at com.revature.Driver.logIn(Driver.java:149)
+	at com.revature.Driver.start(Driver.java:57)
+	at com.revature.Driver.main(Driver.java:19)
+2019-12-18 07:38:38 WARN  UserDAOImpl:95 - Unable to add  account
+org.postgresql.util.PSQLException: No value specified for parameter 3.
+	at org.postgresql.core.v3.SimpleParameterList.checkAllParametersSet(SimpleParameterList.java:264)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:294)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:446)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:370)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:149)
+	at org.postgresql.jdbc.PgPreparedStatement.execute(PgPreparedStatement.java:138)
+	at com.revature.repositories.AccountDAOImpl.addAccount(AccountDAOImpl.java:91)
+	at com.revature.services.AccountServices.addAccount(AccountServices.java:24)
+	at com.revature.Driver.createUser(Driver.java:103)
+	at com.revature.Driver.start(Driver.java:49)
+	at com.revature.Driver.main(Driver.java:19)
+2019-12-18 07:38:38 WARN  UserDAOImpl:177 - Unable to retrieve the account by Pin Number
+org.postgresql.util.PSQLException: ERROR: relation "public.account" does not exist
+  Position: 15
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2497)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2233)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:310)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:446)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:370)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:149)
+	at org.postgresql.jdbc.PgPreparedStatement.executeQuery(PgPreparedStatement.java:108)
+	at com.revature.repositories.AccountDAOImpl.getAccountIdBYPinNumber(AccountDAOImpl.java:164)
+	at com.revature.services.AccountServices.getAccountBYPinNumber(AccountServices.java:36)
+	at com.revature.Driver.createUser(Driver.java:104)
+	at com.revature.Driver.start(Driver.java:49)
+	at com.revature.Driver.main(Driver.java:19)
+2019-12-18 07:38:38 WARN  UserDAOImpl:116 - Unable to add user
+org.postgresql.util.PSQLException: No value specified for parameter 4.
+	at org.postgresql.core.v3.SimpleParameterList.checkAllParametersSet(SimpleParameterList.java:264)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:294)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:446)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:370)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:149)
+	at org.postgresql.jdbc.PgPreparedStatement.execute(PgPreparedStatement.java:138)
+	at com.revature.repositories.UserDAOImpl.addUser(UserDAOImpl.java:112)
+	at com.revature.services.UserService.addUser(UserService.java:23)
+	at com.revature.Driver.start(Driver.java:50)
+	at com.revature.Driver.main(Driver.java:19)
