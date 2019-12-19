@@ -6,6 +6,9 @@ import com.revature.repositories.UserDAO;
 import com.revature.repositories.UserDAOImpl;
 import com.revature.services.AccountServices;
 import com.revature.services.UserService;
+import com.revature.util.ConnectionUtil;
+
+import java.sql.Connection;
 import java.util.List;
 import java.util.Scanner;
 
@@ -75,10 +78,10 @@ public class Driver {
 	private static User createUser() {
 		System.out.println("Enter your first name: ");
 
-		String fname = scan.nextLine();
+		String userFirstName = scan.nextLine();
 
 		System.out.println("Enter your last name: ");
-		String lname = scan.nextLine();
+		String userLastName = scan.nextLine();
 
 		String password = confirmPassword();
 		System.out.println("Enter \"y\" if you are employee of the bank: ");
@@ -102,15 +105,9 @@ public class Driver {
 		int pin = account.getPinNumber();
 		as.addAccount(account);
 		Account acc = as.getAccountBYPinNumber(pin);
-		return new User(0, fname, lname, password, employee, admin);
+		return new User(0, userFirstName, userLastName, password, employee, admin);
 	}
 
-	private static String confirmPassword() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-//		???
 
 //		-------------------------------------
 
@@ -289,8 +286,8 @@ public class Driver {
 	private static void giveOptionsToModifyUsers(User u) {
 		System.out.println("Enter user id to modify the user information.");
 		int choice = ensureIntegerInput();
-		User user1 = us.getUserById(choice);
-		System.out.println(user1);
+		User user = us.getUserById(choice);
+		System.out.println(user);
 		boolean flag = true;
 		while (flag) {
 
@@ -311,32 +308,26 @@ public class Driver {
 
 			case 1:
 				System.out.println("Please Enter the user First Name");
-				String fname = scan.nextLine();
-				user1.setFname(fname);
-				us.updateUser(user1);
+				String userFirstName = scan.nextLine();
+				user.setUserFirstName(userFirstName);
+				us.updateUser(user);
 				System.out.println("User's First Name is changed.");
 				break;
 			case 2:
 				System.out.println("Please Enter the user Last Name");
-				String lname = scan.nextLine();
-				user1.setLname(lname);
-				us.updateUser(user1);
+				String userLastName = scan.nextLine();
+				user.setUserLastName(userLastName);
+				us.updateUser(user);
 				System.out.println("User's Last Name is changed.");
 				break;
 			case 3:
 				System.out.println("Please Enter the user Password");
 				String pass = scan.nextLine();
-				user1.setPassword(pass);
-				us.updateUser(user1);
+				user.setPassword(pass);
+				us.updateUser(user);
 				System.out.println("User's Password is changed.");
 				break;
-			case 5:
-				System.out.println("Please Enter the id for Account.");
-				int id1 = ensureIntegerInput();
-				u.setAccountId(id1);
-				us.updateUser(u);
-				System.out.println("User's Account Id is changed.");
-				break;
+
 			case 4:
 				System.out.println("Please Enter the user's Employee Statue T for \"True\" or F for \"False\"");
 				boolean status = false;

@@ -28,14 +28,14 @@ public class UserDAOImpl implements UserDAO{
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			while(rs.next()) {
-				int id = rs.getInt("user_id");
+				int userId = rs.getInt("user_id");
 				String userFirstName = rs.getString("userFirstName");
 				String userLastName = rs.getString("userLastName");
 				String password = rs.getString("password");
 				boolean isEmployee = rs.getBoolean("isEmployee");
 				boolean isAdmin = rs.getBoolean("isAdmin");
 			
-				User u = new User(id, userFirstName, userLastName, password, isEmployee,isAdmin);
+				User u = new User(userId, userFirstName, userLastName, password, isEmployee,isAdmin);
 				
 				userList.add(u);
 			}
@@ -103,7 +103,7 @@ public class UserDAOImpl implements UserDAO{
 					
 					PreparedStatement stm = conn.prepareStatement(sql);
 					stm.setInt(1, u.getUserId());
-					stm.setString(2, u.getuserLastName());
+					stm.setString(2, u.getUserLastName());
 					stm.setString(3, u.getPassword());	
 					stm.setBoolean(5, u.isEmployee());
 					stm.setBoolean(6, u.isAdmin());
@@ -123,8 +123,8 @@ public class UserDAOImpl implements UserDAO{
 	@Override
 	public boolean updateUser(User u) {
 		int id = u.getUserId();
-		String userFirstName =  u.getuserFirstName();
-		String userLastName =  u.getuserLastName();
+		String userFirstName =  u.getUserFirstName();
+		String userLastName =  u.getUserLastName();
 		String password=  u.getPassword();
 		boolean isEmployee =  u.isEmployee();
 		boolean isAdmin =  u.isAdmin();

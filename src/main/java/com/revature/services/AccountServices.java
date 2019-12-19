@@ -15,7 +15,6 @@ public class AccountServices {
 	}
 	
 	
-	
 	public  Account getAccountById(int id) {
 		return accountDAO.getAccountById(id);
 	}

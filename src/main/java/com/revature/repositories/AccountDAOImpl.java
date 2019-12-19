@@ -14,8 +14,8 @@ import com.revature.util.ConnectionUtil;
 
 
 public class AccountDAOImpl implements AccountDAO {
-
-	private static Logger log = Logger.getLogger(UserDAOImpl.class);
+//	Logger logger = Logger.getLogger(AccountDAOImpl.class);
+	private static Logger log = Logger.getLogger(AccountDAOImpl.class);
 	
 	@Override
 	public List<Account> getAllAccounts() {
