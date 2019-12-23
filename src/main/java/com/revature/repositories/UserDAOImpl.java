@@ -21,6 +21,7 @@ public class UserDAOImpl implements UserDAO{
 	public List<User> getAllUsers() {
 		
 		List<User> userList = new ArrayList<>();
+		boolean isLoggedIn = false;
 		try (Connection con = ConnectionUtil.getConnection()) {
 				
 			String sql = "SELECT * FROM users;";
@@ -28,14 +29,15 @@ public class UserDAOImpl implements UserDAO{
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			while(rs.next()) {
-				int userId = rs.getInt("user_id");
+				int id = rs.getInt("user_id");
 				String userFirstName = rs.getString("userFirstName");
 				String userLastName = rs.getString("userLastName");
 				String password = rs.getString("password");
+				int account_id = rs.getInt("accountId");
 				boolean isEmployee = rs.getBoolean("isEmployee");
 				boolean isAdmin = rs.getBoolean("isAdmin");
 			
-				User u = new User(userId, userFirstName, userLastName, password, isEmployee,isAdmin);
+				User u = new User(id, userFirstName, userLastName, password, account_id, isEmployee,isAdmin,isLoggedIn);
 				
 				userList.add(u);
 			}
@@ -64,6 +66,7 @@ public class UserDAOImpl implements UserDAO{
 	public User getUserById(int id) {
 			
 		User user = null;
+		boolean isLoggedIn = false;
 		try (Connection con = ConnectionUtil.getConnection()) {
 				
 			String sql = "SELECT * FROM users WHERE user_id = ? ;";
@@ -78,10 +81,12 @@ public class UserDAOImpl implements UserDAO{
 				String userFirstName = rs.getString("userFirstName");
 				String userLastName = rs.getString("userLastName");
 				String password = rs.getString("password");
+				int accountId = rs.getInt("accountId");
 				boolean isEmployee = rs.getBoolean("isEmployee");
 				boolean isAdmin = rs.getBoolean("isAdmin");
 				
-				user = new User(user_id, userFirstName, userLastName, password, isEmployee, isAdmin);
+				user = new User(user_id, userFirstName, userLastName, password, accountId, isEmployee,isAdmin,isLoggedIn);
+				
 			}
 			
 			rs.close();
@@ -102,9 +107,10 @@ public class UserDAOImpl implements UserDAO{
 							"VALUES (?, ?, ?, ?, ?, ?);";
 					
 					PreparedStatement stm = conn.prepareStatement(sql);
-					stm.setInt(1, u.getUserId());
-					stm.setString(2, u.getUserLastName());
+					stm.setString(1, u.getFname());
+					stm.setString(2, u.getLname());
 					stm.setString(3, u.getPassword());	
+					stm.setInt(4, u.getAccountId());
 					stm.setBoolean(5, u.isEmployee());
 					stm.setBoolean(6, u.isAdmin());
 					
@@ -122,28 +128,37 @@ public class UserDAOImpl implements UserDAO{
 
 	@Override
 	public boolean updateUser(User u) {
-		int id = u.getUserId();
-		String userFirstName =  u.getUserFirstName();
-		String userLastName =  u.getUserLastName();
-		String password=  u.getPassword();
+		int id = u.getId();
+		
+		String userFirstName =  u.getFname();
+		String userLastName =  u.getLname();
+		String password1 =  u.getPassword();
+		int account_id =  u.getAccountId();
 		boolean isEmployee =  u.isEmployee();
 		boolean isAdmin =  u.isAdmin();
 		
 		
 		try (Connection conn = ConnectionUtil.getConnection()) {
 			
-			
 			String sql = "UPDATE public.users SET userFirstName = ?, userLastName = ?, password = ?, "
-					+ " isEmployee = ?, isAdmin = ? "
+					+ "account_id = ?, isEmployee = ?, isAdmin = ? "
 					+" WHERE user_id = ?;"; 
 					
 			
 			PreparedStatement stm = conn.prepareStatement(sql);
+//			stm.setString(1, f_name);
+//			stm.setString(2, l_name);
+//			stm.setString(3, password1);
+//			stm.setInt(4, accountId);
+//			stm.setBoolean(5, isEmployee);
+//			stm.setBoolean(6, isAdmin);
+			
 			stm.setString(1, userFirstName);
 			stm.setString(2, userLastName);
-			stm.setString(3, password);
-			stm.setBoolean(4, isEmployee);
-			stm.setBoolean(5, isAdmin);
+			stm.setString(3, password1);
+			stm.setInt(4, account_id);
+			stm.setBoolean(5, isEmployee);
+			stm.setBoolean(6, isAdmin);
 			
 			stm.setInt(7, id);	
 			if(!stm.execute()) {
@@ -159,7 +174,7 @@ public class UserDAOImpl implements UserDAO{
 
 	@Override
 	public boolean deleteUser(User u) {
-		int id = u.getUserId();
+		int id = u.getId();
 		try (Connection conn = ConnectionUtil.getConnection()) {
 						
 					String sql = "DELETE FROM users"
@@ -180,27 +195,34 @@ public class UserDAOImpl implements UserDAO{
 	@Override
 	public Account getUserAccount(User u) {
 		
-
-		try (Connection conn = ConnectionUtil.getConnection()) {
-			
-			String sql = "SELECT * FROM account WHERE account_id = " + u.getUserId() + " ;";
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
-			
-			rs.next();
-			int account_id = rs.getInt("account_id");
-			int accountNumber = rs.getInt("accountNumber");
-			double balance = rs.getDouble("balance");
-			int pinNumber = rs.getInt("pinNumber");
-			Account a = new Account(account_id, accountNumber, balance, pinNumber);
-			
+		Account account = null;
 		
+		int accountId = u.getAccountId();
+//		change here?
+		try (Connection con = ConnectionUtil.getConnection()) {
+			
+		String sql = "SELECT * FROM account WHERE account_id = ? ;";
+			
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setInt(1, accountId);
+
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				int account_id = rs.getInt("account_id");		
+				int accountNumber = rs.getInt("accountNumber");
+				double balance = rs.getDouble("balance");
+				int pin = rs.getInt("pinNumber");
+				account = new Account(account_id, accountNumber, balance, pin);
+				
+			}
+			
 			rs.close();
-			return a;
 		} catch(SQLException e) {
 			log.warn("Unable to retrieve user's account", e);
 		}	
-		return null;
+		return account;
 	}
 
 	@Override
@@ -215,7 +237,7 @@ public class UserDAOImpl implements UserDAO{
 		try (Connection conn = ConnectionUtil.getConnection()) {
 			
 			
-			String sql = "UPDATE public.account SET account_number = ?, balance = ?, pinNumber = ? "
+			String sql = "UPDATE public.account SET accountNumber = ?, balance = ?, pinNumber = ? "
 					+ "WHERE accountId = ?;"; 
 					
 			
@@ -238,17 +260,17 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public User getUserByUserIdAndPassword(int userId, String password) {
+	public User getUserByFnameAndPassword(String name, String pass) {
 		User user = null;
-		//boolean isLoggedIn = false;
+		boolean isLoggedIn = false;
 		try (Connection con = ConnectionUtil.getConnection()) {
 				
-			String sql = "SELECT * FROM public.users WHERE user_id = ? AND password = ?;";
+			String sql = "SELECT * FROM public.users WHERE userFirstName = ? AND password = ?;";
 			
 			PreparedStatement stmt = con.prepareStatement(sql);
 			
-			stmt.setInt(1, userId);
-			stmt.setString(2, password);
+			stmt.setString(1, name);
+			stmt.setString(2, pass);
 			
 			ResultSet rs = stmt.executeQuery();
 			
@@ -256,11 +278,13 @@ public class UserDAOImpl implements UserDAO{
 				int user_id = rs.getInt("user_id");
 				String userFirstName = rs.getString("userFirstName");
 				String userLastName = rs.getString("userLastName");
+				String password = rs.getString("password");
+				int accountId = rs.getInt("accountId");
 				boolean isEmployee = rs.getBoolean("isEmployee");
 				boolean isAdmin = rs.getBoolean("isAdmin");
 				
-				user = new User(user_id, userFirstName, userLastName, password, isEmployee,isAdmin);
-
+				user = new User(user_id, userFirstName, userLastName, password, accountId, 
+						isEmployee,isAdmin,isLoggedIn);
 				
 			}
 			
@@ -272,3 +296,4 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 }
+

@@ -1,15 +1,13 @@
 package com.revature.services;
 import java.util.List;
 import java.util.Set;
-
 import com.revature.models.Account;
 import com.revature.models.User;
 import com.revature.repositories.UserDAO;
 import com.revature.repositories.UserDAOImpl;
 
-
 public class UserService {
-		UserDAO userDAO = new UserDAOImpl();
+		UserDAO  userDAO = new UserDAOImpl();
 		
 		public  List<User> getAllUsers(){
 			return userDAO.getAllUsers();
@@ -43,7 +41,7 @@ public class UserService {
 			return userDAO.getAllUsersPassword();
 		}
 		
-		public User getUserByUserIdAndPassword(int userId, String pass) {
-			return userDAO.getUserByUserIdAndPassword(userId, pass);
+		public User getUserByFnameAndPassword(String name,String pass) {
+			return userDAO.getUserByFnameAndPassword(name, pass);
 		}
 }

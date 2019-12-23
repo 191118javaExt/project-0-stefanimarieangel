@@ -14,13 +14,14 @@ public class ConnectionUtil {
 		String username = "postgres";
 		String password = "password";
 		
-		Connection conn = null;
+		Connection con = null;
 		try {
-			conn = DriverManager.getConnection(url, username, password);
+			con = DriverManager.getConnection(url, username, password);
 		} catch (SQLException e) {
 			logger.warn("Unable to obtain connection to database", e);
 		}
 		
-		return conn;
+		return con;
 	}
+
 }

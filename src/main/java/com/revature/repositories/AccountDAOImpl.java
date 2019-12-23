@@ -6,16 +6,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
-
 import com.revature.models.Account;
 import com.revature.util.ConnectionUtil;
 
-
 public class AccountDAOImpl implements AccountDAO {
-//	Logger logger = Logger.getLogger(AccountDAOImpl.class);
-	private static Logger log = Logger.getLogger(AccountDAOImpl.class);
+
+	private static Logger log = Logger.getLogger(UserDAOImpl.class);
 	
 	@Override
 	public List<Account> getAllAccounts() {
@@ -35,7 +32,7 @@ public class AccountDAOImpl implements AccountDAO {
 						int accountNumber = rs.getInt("accountNumber");
 						double balance = rs.getDouble("balance");
 						int pin = rs.getInt("pinNumber");
-						Account	account = new Account(account_id, accountNumber, balance, pin);
+					Account	account = new Account(account_id, accountNumber, balance, pin);
 						accountList.add(account);
 					}
 					
@@ -63,7 +60,7 @@ public class AccountDAOImpl implements AccountDAO {
 						int account_id = rs.getInt("account_id");
 						int accountNumber = rs.getInt("accountNumber");
 						double balance = rs.getDouble("balance");
-						int pin = rs.getInt("pin");
+						int pin = rs.getInt("pinNumber");
 						account = new Account(account_id, accountNumber, balance,pin);
 						
 					}
@@ -87,6 +84,7 @@ public class AccountDAOImpl implements AccountDAO {
 			PreparedStatement stm = conn.prepareStatement(sql);
 			stm.setInt(1, a.getAccountNumber());
 			stm.setDouble(2, a.getBalance());
+			stm.setInt(3, a.getPinNumber());
 			
 			if(!stm.execute()) {
 				return false;
@@ -206,47 +204,5 @@ public class AccountDAOImpl implements AccountDAO {
 		}
 		return true;
 	}
-
-//	@Override
-//	public List<Account> getAllAccounts() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public Account getAccountById(int id) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public boolean addAccount(Account a) {
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
-//
-//	@Override
-//	public boolean updateAccount(Account a) {
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
-//
-//	@Override
-//	public boolean deleteAccount(Account a) {
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
-//
-//	@Override
-//	public Account getAccountIdBYPinNumber(int pinNumber) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public boolean updateBalanceOfAccount(Account a, double amount) {
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
 
 }

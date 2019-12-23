@@ -5,27 +5,28 @@ public class Account {
 	private int accountNumber;
 	private double balance;
 	private int pinNumber;
-
+	
+	
 	public Account() {
 		super();
-
+		
 	}
 
-	public Account(int id, int accountNumber, double balance, int pinNumber) {
+	public Account(int id, int accountNumber, double balance,
+			int pinNumber) {
 		super();
 		this.id = id;
 		this.accountNumber = accountNumber;
 		this.balance = balance;
+		this.pinNumber = pinNumber;
 	}
 
-	public Account(int userId, String userFirstName, String userLastName, int password, boolean isEmployee,
-			boolean isAdmin) {
 
-	}
 
 	public int getId() {
 		return id;
 	}
+
 
 	public void setId(int id) {
 		this.id = id;
@@ -35,26 +36,33 @@ public class Account {
 		return accountNumber;
 	}
 
+
 	public void setAccountNumber(int accountNumber) {
 		this.accountNumber = accountNumber;
 	}
+
 
 	public double getBalance() {
 		return balance;
 	}
 
+
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
+	
 
 	public int getPinNumber() {
 		return pinNumber;
 	}
 
+
 	public void setPinNumber(int pinNumber) {
 		this.pinNumber = pinNumber;
 	}
 
+
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -67,6 +75,7 @@ public class Account {
 		result = prime * result + pinNumber;
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -88,10 +97,11 @@ public class Account {
 		return true;
 	}
 
+
 	@Override
 	public String toString() {
-		return "Account [id=" + id + ", accountNumber=" + accountNumber + ", balance=" + balance + ", pinNumber="
-				+ pinNumber + "]";
+		return "Account [id=" + id + ", accountNumber=" + accountNumber + ", balance="
+				+ balance + ", pinNumber="+pinNumber +"]";
 	}
 
 }
